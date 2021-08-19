@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Eriocnemis, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- preference -->
+    <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveRuleInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\ResolveRule"/>
+    <!-- buttons configurations -->
+    <virtualType name="EriocnemisSalesAutoCancelRuleSaveButton" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\Component\Control\SaveSplitButton">
+        <arguments>
+            <argument name="targetName" xsi:type="string">eriocnemis_sales_autocancel_rule_form.eriocnemis_sales_autocancel_rule_form</argument>
+            <argument name="aclResource" xsi:type="string">Eriocnemis_AutoCancel::rule_edit</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EriocnemisSalesAutoCancelRuleDeleteButton" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\Component\Control\DeleteButton">
+        <arguments>
+            <argument name="idFieldName" xsi:type="const">Eriocnemis\SalesAutoCancelRuleApi\Api\Data\RuleInterface::RULE_ID</argument>
+            <argument name="aclResource" xsi:type="string">Eriocnemis_AutoCancel::rule_delete</argument>
+            <argument name="sortOrder" xsi:type="number">30</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EriocnemisSalesAutoCancelRuleAddButton" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\Component\Control\AddButton">
+        <arguments>
+            <argument name="aclResource" xsi:type="string">Eriocnemis_AutoCancel::rule_edit</argument>
+            <argument name="sortOrder" xsi:type="number">30</argument>
+        </arguments>
+    </virtualType>
+    <!-- form data provider configurations -->
+    <virtualType name="EriocnemisRegionFormModifierPool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EriocnemisSalesAutoCancelRuleFormModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="general" xsi:type="array">
+                    <item name="class" xsi:type="string">Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\Modifier\Form\General</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+                <item name="restrict" xsi:type="array">
+                    <item name="class" xsi:type="string">Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\Modifier\Form\Restrict</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="payment" xsi:type="array">
+                    <item name="class" xsi:type="string">Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\Modifier\Form\Payment</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- data provider configurations -->
+    <virtualType name="EriocnemisSalesAutoCancelRuleListingModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool"/>
+    <type name="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\FormDataProvider">
+        <arguments>
+            <argument name="modifierPool" xsi:type="object">EriocnemisSalesAutoCancelRuleFormModifierPool</argument>
+        </arguments>
+    </type>
+    <type name="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\ListingDataProvider">
+        <arguments>
+            <argument name="modifierPool" xsi:type="object">EriocnemisSalesAutoCancelRuleListingModifierPool</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MapperPool">
+        <arguments>
+            <argument name="mappers" xsi:type="array">
+                <item name="Eriocnemis\SalesAutoCancelRuleApi\Api\Data\RuleInterface" xsi:type="string">EriocnemisSalesAutoCancelRuleMapper</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="EriocnemisSalesAutoCancelRuleMapper" type="Magento\Framework\EntityManager\Mapper">
+        <arguments>
+            <argument name="config" xsi:type="array">
+                <item name="Eriocnemis\SalesAutoCancelRuleApi\Api\Data\RuleInterface" xsi:type="array">
+                    <item name="rule_id" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

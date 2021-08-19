@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Eriocnemis, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Eriocnemis_AutoCancel::rule"
+             title="Order Auto Cancel Rules"
+             translate="title"
+             module="Eriocnemis_SalesAutoCancelRuleAdminUi"
+             sortOrder="55"
+             parent="Magento_Backend::stores_settings"
+             action="eriocnemis_sales_autocancel/rule"
+             resource="Eriocnemis_AutoCancel::rule"/>
+    </menu>
+</config>

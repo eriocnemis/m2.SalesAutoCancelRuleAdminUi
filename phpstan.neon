@@ -1,0 +1,13 @@
+parameters:
+    checkExplicitMixedMissingReturn: true
+    checkPhpDocMissingReturn: true
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Method (?:.*?) should return (?:.*?)ExtensionInterface\|null but returns Magento\\Framework\\Api\\ExtensionAttributesInterface.#'
+        - '#Method (?:.*?) should return Magento\\Framework\\Api\\Search\\FilterGroup but returns Magento\\Framework\\Api\\AbstractSimpleObject.#'
+        - '#Call to an undefined method Magento\\Sales\\Api\\Data\\OrderInterface::addCommentToStatusHistory\(\).#'
+        - '#Method (?:.*?) has parameter \$collection with no value type specified in iterable type Magento\\Framework\\Data\\Collection\\AbstractDb.#'
+        - '#Call to an undefined method Magento\\Sales\\Api\\Data\\OrderInterface::canCancel\(\).#'
+        - '#Call to an undefined method Magento\\Framework\\App\\RequestInterface::getPost\(\).#'
+        - '#Call to an undefined method Magento\\Framework\\App\\RequestInterface::isPost\(\).#'
+        - '#method Magento\\Framework\\Data\\Collection::walk\(\) expects callable\(\):#'
