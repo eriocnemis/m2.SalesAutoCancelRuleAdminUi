@@ -15,7 +15,7 @@ use Eriocnemis\SalesAutoCancelRuleApi\Api\GetRuleByIdInterface;
 use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveRuleInterface;
 
 /**
- * Resolve rule
+ * Resolve rule data
  *
  * @api
  */
