@@ -50,8 +50,8 @@ class Restrict implements ModifierInterface
      */
     public function modifyData(array $data)
     {
-        $data['store_ids'] = array_map('strval', $data['store_ids']);
-        $data['customer_group_ids'] = array_map('strval', $data['customer_group_ids']);
+        $data['store_ids'] = array_map('strval', $data['store_ids'] ?? []);
+        $data['customer_group_ids'] = array_map('strval', $data['customer_group_ids'] ?? []);
 
         return $data;
     }
