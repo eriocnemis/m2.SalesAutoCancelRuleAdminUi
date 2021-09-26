@@ -7,10 +7,6 @@ declare(strict_types=1);
 
 namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule;
 
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\ReportingInterface;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\EntityManager\HydratorInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
@@ -51,12 +47,8 @@ class FormDataProvider extends DataProvider
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param ReportingInterface $reporting
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param RequestInterface $request
-     * @param FilterBuilder $filterBuilder
+     * @param Context $context
      * @param GetRuleByIdInterface $getRuleById
-     * @param DataPersistorInterface $dataPersistor
      * @param HydratorInterface $hydrator
      * @param PoolInterface $modifierPool
      * @param mixed[] $meta
@@ -66,30 +58,26 @@ class FormDataProvider extends DataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        ReportingInterface $reporting,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
+        Context $context,
         GetRuleByIdInterface $getRuleById,
-        DataPersistorInterface $dataPersistor,
         HydratorInterface $hydrator,
         PoolInterface $modifierPool,
         array $meta = [],
         array $data = []
     ) {
-        $this->getRuleById = $getRuleById;
-        $this->dataPersistor = $dataPersistor;
+        $this->dataPersistor = $context->getDataPersistor();
         $this->modifierPool = $modifierPool;
+        $this->getRuleById = $getRuleById;
         $this->hydrator = $hydrator;
 
         parent::__construct(
             $name,
             $primaryFieldName,
             $requestFieldName,
-            $reporting,
-            $searchCriteriaBuilder,
-            $request,
-            $filterBuilder,
+            $context->getReporting(),
+            $context->getSearchCriteriaBuilder(),
+            $context->getRequest(),
+            $context->getFilterBuilder(),
             $meta,
             $data
         );
