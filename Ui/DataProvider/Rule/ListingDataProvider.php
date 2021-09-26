@@ -7,11 +7,7 @@ declare(strict_types=1);
 
 namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule;
 
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\ReportingInterface;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 use Magento\Framework\Api\Search\SearchResultInterface;
-use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
 use Magento\Ui\DataProvider\SearchResultFactory;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
@@ -47,10 +43,7 @@ class ListingDataProvider extends DataProvider
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param ReportingInterface $reporting
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param RequestInterface $request
-     * @param FilterBuilder $filterBuilder
+     * @param Context $context
      * @param GetRuleListInterface $getRuleList
      * @param SearchResultFactory $searchResultFactory
      * @param PoolInterface $modifierPool
@@ -61,10 +54,7 @@ class ListingDataProvider extends DataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        ReportingInterface $reporting,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
+        Context $context,
         GetRuleListInterface $getRuleList,
         SearchResultFactory $searchResultFactory,
         PoolInterface $modifierPool,
@@ -79,10 +69,10 @@ class ListingDataProvider extends DataProvider
             $name,
             $primaryFieldName,
             $requestFieldName,
-            $reporting,
-            $searchCriteriaBuilder,
-            $request,
-            $filterBuilder,
+            $context->getReporting(),
+            $context->getSearchCriteriaBuilder(),
+            $context->getRequest(),
+            $context->getFilterBuilder(),
             $meta,
             $data
         );
