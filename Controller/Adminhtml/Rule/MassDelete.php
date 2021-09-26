@@ -27,12 +27,12 @@ class MassDelete extends AbstractMassAction
      */
     public function execute(): ResultInterface
     {
-        if (true !== $this->getRequest()->isPost()) {
-            $this->messageManager->addErrorMessage(
-                (string)__('Wrong request.')
-            );
-            return $this->resultRedirectFactory->create()->setPath('*/*');
-        }
+//        if (true !== $this->getRequest()->isPost()) {
+//            $this->messageManager->addErrorMessage(
+//                (string)__('Wrong request.')
+//            );
+//            return $this->resultRedirectFactory->create()->setPath('*/*');
+//        }
 
         try {
             $collection = $this->filter->getCollection(
