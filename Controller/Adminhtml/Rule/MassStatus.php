@@ -7,62 +7,18 @@ declare(strict_types=1);
 
 namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Controller\Adminhtml\Rule;
 
-use Psr\Log\LoggerInterface;
-use Magento\Backend\App\Action;
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Ui\Component\MassAction\Filter;
-use Eriocnemis\SalesAutoCancelRule\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
  * Mass status controller
  */
-class MassStatus extends Action implements HttpPostActionInterface
+class MassStatus extends AbstractMassAction
 {
     /**
      * Authorization level of a basic admin session
      */
     const ADMIN_RESOURCE = 'Eriocnemis_AutoCancel::rule_edit';
-
-    /**
-     * @var Filter
-     */
-    private $filter;
-
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * Initialize controller
-     *
-     * @param Context $context
-     * @param CollectionFactory $collectionFactory
-     * @param Filter $filter
-     * @param LoggerInterface $logger
-     */
-    public function __construct(
-        Context $context,
-        CollectionFactory $collectionFactory,
-        Filter $filter,
-        LoggerInterface $logger
-    ) {
-        $this->collectionFactory = $collectionFactory;
-        $this->filter = $filter;
-        $this->logger = $logger;
-
-        parent::__construct(
-            $context
-        );
-    }
 
     /**
      * Change specified statuses

@@ -155,13 +155,12 @@ class Save extends Action implements HttpPostActionInterface
      */
     private function redirectAfterFailure(Redirect $result, $ruleId = null): void
     {
-        if (null === $ruleId) {
-            $result->setPath('*/*/new');
-        } else {
-            $result->setPath(
-                '*/*/edit',
-                [RuleInterface::RULE_ID => $ruleId, '_current' => true]
-            );
+        $path = '*/*/new';
+        $params = [];
+        if (null !== $ruleId) {
+            $path = '*/*/edit';
+            $params = [RuleInterface::RULE_ID => $ruleId, '_current' => true];
         }
+        $result->setPath($path, $params);
     }
 }
