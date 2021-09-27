@@ -10,14 +10,16 @@ namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Controller\Adminhtml\Rule;
 use Psr\Log\LoggerInterface;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Ui\Component\MassAction\Filter;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Eriocnemis\SalesAutoCancelRule\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
  * Abstract mass action controller
  */
-abstract class AbstractMassAction extends Action implements HttpPostActionInterface
+abstract class AbstractMassAction extends Action
 {
     /**
      * @var Filter
@@ -28,6 +30,11 @@ abstract class AbstractMassAction extends Action implements HttpPostActionInterf
      * @var CollectionFactory
      */
     protected $collectionFactory;
+
+    /**
+     * @var string
+     */
+    protected $errorMessage;
 
     /**
      * @var LoggerInterface
@@ -56,4 +63,43 @@ abstract class AbstractMassAction extends Action implements HttpPostActionInterf
             $context
         );
     }
+
+    /**
+     * Execute action
+     *
+     * @return ResultInterface
+     */
+    public function execute(): ResultInterface
+    {
+        try {
+            $collection = $this->filter->getCollection(
+                $this->collectionFactory->create()
+            );
+
+            if ($collection->getSize()) {
+                return $this->massAction($collection);
+            }
+            $this->messageManager->addErrorMessage(
+                (string)__('Please correct the rules you requested.')
+            );
+        } catch (LocalizedException $e) {
+            $this->messageManager->addErrorMessage(
+                $e->getMessage()
+            );
+        } catch (\Exception $e) {
+            $this->logger->critical($e->getMessage());
+            $this->messageManager->addErrorMessage(
+                (string)__($this->errorMessage)
+            );
+        }
+        return $this->resultRedirectFactory->create()->setPath('*/*/index');
+    }
+
+    /**
+     * Process to collection items
+     *
+     * @param AbstractDb $collection
+     * @return ResultInterface
+     */
+    abstract protected function massAction(AbstractDb $collection);
 }

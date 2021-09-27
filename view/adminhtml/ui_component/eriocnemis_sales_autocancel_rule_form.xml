@@ -15,7 +15,7 @@
     </argument>
     <settings>
         <dataScope>data</dataScope>
-        <!--<ajaxSave>true</ajaxSave>-->
+        <ajaxSave>true</ajaxSave>
         <namespace>eriocnemis_sales_autocancel_rule_form</namespace>
         <deps>
             <dep>eriocnemis_sales_autocancel_rule_form.eriocnemis_sales_autocancel_rule_form_data_source</dep>

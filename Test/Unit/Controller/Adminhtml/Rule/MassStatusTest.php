@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Test\Unit\Controller\Adminhtml\Rule;
 
-use Eriocnemis\SalesAutoCancelRuleAdminUi\Controller\Adminhtml\Rule\MassDelete;
+use Eriocnemis\SalesAutoCancelRuleAdminUi\Controller\Adminhtml\Rule\MassStatus;
 use Eriocnemis\SalesAutoCancelRuleAdminUi\Test\Unit\Controller\Adminhtml\AbstractMassActionTestCase;
 
 /**
- * Mass delete
+ * Mass status
  */
-class MassDeleteTest extends AbstractMassActionTestCase
+class MassStatusTest extends AbstractMassActionTestCase
 {
     /**
      * This method is called before a test is executed
@@ -22,7 +22,7 @@ class MassDeleteTest extends AbstractMassActionTestCase
      */
     protected function setUp(): void
     {
-        $this->prepare(MassDelete::class);
+        $this->prepare(MassStatus::class);
     }
 
     /**
@@ -33,7 +33,7 @@ class MassDeleteTest extends AbstractMassActionTestCase
      * @param string $message
      * @param string $path
      * @return void
-     * @dataProvider dataProviderMassDelete
+     * @dataProvider dataProviderMassStatus
      * @test
      */
     public function execute($size, $method, $message, $path)
@@ -42,14 +42,14 @@ class MassDeleteTest extends AbstractMassActionTestCase
     }
 
     /**
-     * Data provider of mass delete test
+     * Data provider of mass status test
      *
      * @return mixed[]
      */
-    public function dataProviderMassDelete()
+    public function dataProviderMassStatus()
     {
         return [
-            [3, 'addSuccessMessage', 'You deleted a total of 3 records.', '*/*/index'],
+            [3, 'addSuccessMessage', 'A total of 3 record(s) have been modified.', '*/*/index'],
             [0, 'addErrorMessage', 'Please correct the rules you requested.', '*/*/index'],
         ];
     }
