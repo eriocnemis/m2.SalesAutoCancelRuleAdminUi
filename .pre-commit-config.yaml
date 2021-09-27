@@ -18,6 +18,6 @@ repos:
         args: ["--autofix"]
     -   id: magento-phpmd
     -   id: magento-phpcpd
-#    -   id: magento-phpstan
-#        args: ["-a=/dev/tests/api-functional/framework/autoload.php"]
+    -   id: magento-phpstan
+        args: ["-a=/dev/tests/api-functional/framework/autoload.php"]
     -   id: magento-phpunit
