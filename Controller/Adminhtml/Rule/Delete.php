@@ -75,29 +75,26 @@ class Delete extends Action implements HttpPostActionInterface
         }
 
         try {
-            $this->deleteRuleById->execute($ruleId);
-            $this->messageManager->addSuccessMessage(
-                (string)__('The Rule has been deleted.')
-            );
-            $result->setPath('*/*/index');
+            if (true === $this->deleteRuleById->execute($ruleId)) {
+                $this->messageManager->addSuccessMessage(
+                    (string)__('The Rule has been deleted.')
+                );
+                return $result->setPath('*/*/index');
+            }
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage(
                 $e->getMessage()
             );
-            $result->setPath('*/*/edit', [
-                RuleInterface::RULE_ID => $ruleId,
-                '_current' => true,
-            ]);
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
             $this->messageManager->addErrorMessage(
                 (string)__('We can\'t delete the rule right now. Please review the log and try again.')
             );
-            $result->setPath('*/*/edit', [
+        }
+        return $result->setPath('*/*/edit', [
                 RuleInterface::RULE_ID => $ruleId,
                 '_current' => true,
             ]);
-        }
-        return $result;
+        ;
     }
 }
