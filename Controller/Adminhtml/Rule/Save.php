@@ -7,17 +7,13 @@ declare(strict_types=1);
 
 namespace Eriocnemis\SalesAutoCancelRuleAdminUi\Controller\Adminhtml\Rule;
 
-use Psr\Log\LoggerInterface;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\Controller\Result\Redirect;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Validation\ValidationException;
-use Magento\Framework\App\Request\DataPersistorInterface;
-use Eriocnemis\SalesAutoCancelRuleApi\Api\Data\RuleInterface;
-use Eriocnemis\SalesAutoCancelRuleApi\Api\SaveRuleInterface;
-use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveRuleInterface;
+use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\GetExceptionInterface;
+use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveResultInterface;
+use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\SaveRuleDataInterface;
 
 /**
  * Save controller
@@ -30,45 +26,37 @@ class Save extends Action implements HttpPostActionInterface
     const ADMIN_RESOURCE = 'Eriocnemis_AutoCancel::rule_edit';
 
     /**
-     * @var ResolveRuleInterface
+     * @var SaveRuleDataInterface
      */
-    private $resolveRule;
+    private $saveRuleData;
 
     /**
-     * @var SaveRuleInterface
+     * @var ResolveResultInterface
      */
-    private $saveRule;
+    private $resolveResult;
 
     /**
-     * @var DataPersistorInterface
+     * @var GetExceptionInterface
      */
-    private $dataPersistor;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private $getException;
 
     /**
      * Initialize controller
      *
      * @param Context $context
-     * @param ResolveRuleInterface $resolveRule
-     * @param SaveRuleInterface $saveRule
-     * @param DataPersistorInterface $dataPersistor
-     * @param LoggerInterface $logger
+     * @param SaveRuleDataInterface $saveRuleData
+     * @param ResolveResultInterface $resolveResult
+     * @param GetExceptionInterface $getException
      */
     public function __construct(
         Context $context,
-        ResolveRuleInterface $resolveRule,
-        SaveRuleInterface $saveRule,
-        DataPersistorInterface $dataPersistor,
-        LoggerInterface $logger
+        SaveRuleDataInterface $saveRuleData,
+        ResolveResultInterface $resolveResult,
+        GetExceptionInterface $getException
     ) {
-        $this->resolveRule = $resolveRule;
-        $this->saveRule = $saveRule;
-        $this->dataPersistor = $dataPersistor;
-        $this->logger = $logger;
+        $this->saveRuleData = $saveRuleData;
+        $this->resolveResult = $resolveResult;
+        $this->getException = $getException;
 
         parent::__construct(
             $context
@@ -78,89 +66,16 @@ class Save extends Action implements HttpPostActionInterface
     /**
      * Save rule
      *
-     * @return Redirect
+     * @return ResultInterface
      */
-    public function execute(): Redirect
+    public function execute(): ResultInterface
     {
-        $data = $this->getRequest()->getPost('rule');
-        $ruleId = $data[RuleInterface::RULE_ID] ?? null;
-
-        /** @var Redirect $result */
-        $result = $this->resultRedirectFactory->create();
-        if (!$this->getRequest()->isPost() || empty($data)) {
-            $this->messageManager->addErrorMessage(
-                (string)__('Wrong request.')
-            );
-            $this->redirectAfterFailure($result);
-            return $result;
-        }
-
         try {
-            $this->dataPersistor->set('eriocnemis_sales_autocancel_rule', $data);
-            $rule = $this->resolveRule->execute($ruleId, $data);
-            $rule = $this->saveRule->execute($rule);
-            $this->messageManager->addSuccessMessage(
-                (string)__('The Rule has been saved.')
-            );
-            $this->redirectAfterSuccess($result, (int)$rule->getId());
-        } catch (ValidationException $e) {
-            foreach ($e->getErrors() as $error) {
-                $this->messageManager->addErrorMessage(
-                    $error->getMessage()
-                );
-            }
-            $this->redirectAfterFailure($result, $ruleId);
-        } catch (LocalizedException $e) {
-            $this->messageManager->addErrorMessage(
-                $e->getMessage()
-            );
-            $this->redirectAfterFailure($result, $ruleId);
+            $rule = $this->saveRuleData->execute($this->getRequest());
+            return $this->resolveResult->execute($this, $rule->getId());
         } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
-            $this->messageManager->addErrorMessage(
-                (string)__('We can\'t save the rule right now. Please review the log and try again.')
-            );
-            $this->redirectAfterFailure($result, $ruleId);
+            $this->getException->execute($e);
         }
-        return $result;
-    }
-
-    /**
-     * Retrieve redirect url after save
-     *
-     * @param Redirect $result
-     * @param int $ruleId
-     * @return void
-     */
-    private function redirectAfterSuccess(Redirect $result, $ruleId): void
-    {
-        $path = '*/*/';
-        $params = [];
-        if ($this->getRequest()->getParam('back')) {
-            $path = '*/*/edit';
-            $params = ['_current' => true, RuleInterface::RULE_ID => $ruleId];
-        } elseif ($this->getRequest()->getParam('redirect_to_new')) {
-            $path = '*/*/new';
-            $params = ['_current' => true];
-        }
-        $result->setPath($path, $params);
-    }
-
-    /**
-     * Retrieve redirect url after unsuccessful save
-     *
-     * @param Redirect $result
-     * @param int|null $ruleId
-     * @return void
-     */
-    private function redirectAfterFailure(Redirect $result, $ruleId = null): void
-    {
-        $path = '*/*/new';
-        $params = [];
-        if (null !== $ruleId) {
-            $path = '*/*/edit';
-            $params = [RuleInterface::RULE_ID => $ruleId, '_current' => true];
-        }
-        $result->setPath($path, $params);
+        return $this->resolveResult->execute($this);
     }
 }

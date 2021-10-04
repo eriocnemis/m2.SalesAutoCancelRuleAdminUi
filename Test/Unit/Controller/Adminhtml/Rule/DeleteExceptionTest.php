@@ -15,7 +15,7 @@ use Exception;
 /**
  * Delete
  */
-class DeleteNotDeleteExceptionTest extends AbstractActionTestCase
+class DeleteExceptionTest extends AbstractActionTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

@@ -75,12 +75,11 @@ class Delete extends Action implements HttpPostActionInterface
         }
 
         try {
-            if (true === $this->deleteRuleById->execute($ruleId)) {
-                $this->messageManager->addSuccessMessage(
-                    (string)__('The Rule has been deleted.')
-                );
-                return $result->setPath('*/*/index');
-            }
+            $this->deleteRuleById->execute($ruleId);
+            $this->messageManager->addSuccessMessage(
+                (string)__('The Rule has been deleted.')
+            );
+            return $result->setPath('*/*/index');
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage(
                 $e->getMessage()

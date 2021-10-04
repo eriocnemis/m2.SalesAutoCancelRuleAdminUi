@@ -9,6 +9,8 @@
     xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- preference -->
     <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveRuleInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\ResolveRule"/>
+    <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveResultInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\ResolveResult"/>
+    <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\SaveRuleDataInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\SaveRuleData"/>
     <!-- buttons configurations -->
     <virtualType name="EriocnemisSalesAutoCancelRuleSaveButton" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\Component\Control\SaveSplitButton">
         <arguments>
