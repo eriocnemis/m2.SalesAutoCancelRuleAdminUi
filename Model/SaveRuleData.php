@@ -23,14 +23,14 @@ use Eriocnemis\SalesAutoCancelRuleAdminUi\Api\SaveRuleDataInterface;
 class SaveRuleData implements SaveRuleDataInterface
 {
     /**
-     * @var ResolveRuleInterface
-     */
-    private $resolveRule;
-
-    /**
      * @var SaveRuleInterface
      */
     private $saveRule;
+
+    /**
+     * @var ResolveRuleInterface
+     */
+    private $resolveRule;
 
     /**
      * @var DataPersistorInterface
