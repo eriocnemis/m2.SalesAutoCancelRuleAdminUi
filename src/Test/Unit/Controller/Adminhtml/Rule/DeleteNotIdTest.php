@@ -37,10 +37,6 @@ class DeleteNotIdTest extends AbstractActionTestCase
             ->method('getPost')
             ->willReturn(null);
 
-        $this->messageManager->expects($this->once())
-            ->method('addErrorMessage')
-            ->with((string)__('Wrong request.'));
-
         $this->resultRedirect->expects($this->once())
             ->method('setPath')
             ->with('*/*')

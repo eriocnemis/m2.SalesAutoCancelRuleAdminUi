@@ -46,10 +46,6 @@ class DeleteExceptionTest extends AbstractActionTestCase
             ->method('getPost')
             ->willReturn(1);
 
-        $this->messageManager->expects($this->once())
-            ->method('addErrorMessage')
-            ->with((string)__('We can\'t delete the rule right now. Please review the log and try again.'));
-
         $this->deleteRuleById->expects($this->any())
             ->method('execute')
             ->willThrowException(new Exception);

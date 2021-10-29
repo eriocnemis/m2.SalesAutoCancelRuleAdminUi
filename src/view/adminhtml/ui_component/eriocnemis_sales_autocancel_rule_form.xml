@@ -15,7 +15,6 @@
     </argument>
     <settings>
         <dataScope>data</dataScope>
-        <ajaxSave>true</ajaxSave>
         <namespace>eriocnemis_sales_autocancel_rule_form</namespace>
         <deps>
             <dep>eriocnemis_sales_autocancel_rule_form.eriocnemis_sales_autocancel_rule_form_data_source</dep>
@@ -36,7 +35,9 @@
     </settings>
     <dataSource name="eriocnemis_sales_autocancel_rule_form_data_source" component="Magento_Ui/js/form/provider">
         <settings>
-            <submitUrl path="*/*/save"/>
+            <submitUrl path="*/*/save">
+                <param name="_current">1</param>
+            </submitUrl>
             <validateUrl path="*/*/validate"/>
         </settings>
         <dataProvider class="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\DataProvider\Rule\FormDataProvider" name="eriocnemis_sales_autocancel_rule_form_data_source">
