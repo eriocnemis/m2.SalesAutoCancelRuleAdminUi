@@ -11,6 +11,7 @@
     <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveRuleInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\ResolveRule"/>
     <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\ResolveExceptionInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\ResolveException"/>
     <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Api\SaveRuleDataInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\SaveRuleData"/>
+    <preference for="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\Rule\FormatterInterface" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\Rule\Formatter"/>
     <!-- buttons configurations -->
     <virtualType name="EriocnemisSalesAutoCancelRuleSaveButton" type="Eriocnemis\SalesAutoCancelRuleAdminUi\Ui\Component\Control\SaveSplitButton">
         <arguments>
@@ -84,4 +85,12 @@
             </argument>
         </arguments>
     </virtualType>
+    <!-- formatter configuration -->
+    <type name="Eriocnemis\SalesAutoCancelRuleAdminUi\Model\Rule\Formatter">
+        <arguments>
+            <argument name="formatters" xsi:type="array">
+                <item name="payment_method" xsi:type="object">Eriocnemis\SalesAutoCancelRuleAdminUi\Model\Rule\Formatter\PaymentMethodFormatter</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
