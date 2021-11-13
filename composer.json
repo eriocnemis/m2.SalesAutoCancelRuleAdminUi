@@ -2,7 +2,7 @@
     "name": "eriocnemis/module-sales-autocancel-rule-admin-ui",
     "description": "The module provides UI for Admin Panel of order auto cancel manage as well as bulk operations.",
     "type": "magento2-module",
-    "version": "2.3.1",
+    "version": "2.3.2",
     "authors": [
         {
             "name": "Eriocnemis Team",
@@ -21,8 +21,8 @@
         "magento/module-customer": "102.0.*",
         "magento/module-backend": "101.0.*",
         "magento/module-payment": "100.3.*",
-        "eriocnemis/module-sales-autocancel-rule-api": "2.3.*",
-        "eriocnemis/module-sales-autocancel-rule": "2.3.*"
+        "eriocnemis/module-sales-autocancel-rule-api": "2.3.2",
+        "eriocnemis/module-sales-autocancel-rule": "2.3.2"
     },
     "autoload": {
         "files": [
