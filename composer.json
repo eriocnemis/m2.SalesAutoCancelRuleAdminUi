@@ -21,6 +21,7 @@
         "magento/module-customer": "102.0.*",
         "magento/module-backend": "101.0.*",
         "magento/module-payment": "100.3.*",
+        "eriocnemis/core-exception": "2.3.*",
         "eriocnemis/module-sales-autocancel-rule-api": "2.3.2",
         "eriocnemis/module-sales-autocancel-rule": "2.3.2"
     },
